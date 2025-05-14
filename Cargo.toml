@@ -1,0 +1,19 @@
+[package]
+name = "building-diagram-md"
+version = "0.1.0"
+authors = ["Armin Schäfer"]
+description = "Write electric plans via markdown."
+readme = "README.md"
+edition = "2024"
+categories = ["markdown"]
+keywords = ["Markdown"]
+
+[dependencies]
+bevy = "0.16.0"
+bevy_panorbit_camera = "0.26"
+
+[profile.dev]
+opt-level = 0
+
+[profile.dev.package."*"]
+opt-level = 3
