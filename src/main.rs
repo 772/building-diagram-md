@@ -41,6 +41,7 @@ fn setup(
     // Spawn objects.
     let scaling = 1.0 / 18.0;
     let filename_markdown = "input.md";
+    let mut room_index = 0.0;
     for section in std::fs::read_to_string(filename_markdown)
         .expect("Konnte input.md nicht einlesen")
         .split('#')
@@ -87,13 +88,20 @@ fn setup(
                         depth as f32 * scaling,
                     ))),
                     MeshMaterial3d(materials.add(StandardMaterial {
-                        base_color: Color::srgba(0.0, 0.0, 0.0, 1.0),
+                        base_color: Color::srgba(0.2, 0.3, 0.4, 0.7),
+                        metallic: 0.7,
+                        perceptual_roughness: 0.3,
+                        reflectance: 0.8,
+                        emissive: Color::srgba(0.05, 0.05, 0.07, 1.0).into(),
                         cull_mode: Some(bevy::render::render_resource::Face::Front),
+                        double_sided: true,
+                        unlit: false,
+                        fog_enabled: true,
                         ..default()
                     })),
                     bevy::pbr::NotShadowCaster,
                     Pickable::IGNORE,
-                    Transform::from_translation(Vec3::new(0.0, 0.0, 0.0)),
+                    Transform::from_translation(Vec3::new(0.4 * room_index, 0.0, 0.0)),
                 ))
                 .with_children(|parent| {
                     for obj in &top {
@@ -247,6 +255,7 @@ fn setup(
                             ));
                     }
                 });
+            room_index += 1.0;
         }
     }
 
